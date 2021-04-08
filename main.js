@@ -20,7 +20,8 @@ function init() {
                 source: new ol.source.OSM()
             })
         ],
-        target: "js-map"
+        target: "js-map",
+        keyboardEventTarget: document
     })
 
     const popupContainerELement = document.getElementById('popup-coordinates');
@@ -33,11 +34,19 @@ function init() {
     map.addOverlay(popup);
 
     map.on('click', (e) => {
-        console.log(e.coordinate)
-        const clickedCoordinate = e.coordinate;
-        // popup.setPosition(undefined)
-        popup.setPosition(clickedCoordinate)
-        popupContainerELement.innerHTML = clickedCoordinate;
+            console.log(e.coordinate)
+            const clickedCoordinate = e.coordinate;
+            // popup.setPosition(undefined)
+            popup.setPosition(clickedCoordinate)
+            popupContainerELement.innerHTML = clickedCoordinate;
+
+
+        })
+        //  DragRotate
+    const dragRotateInteraction = new ol.interaction.DragRotate({
+        condition: ol.events.condition.altKeyOnly
     })
+
+    map.addInteraction(dragRotateInteraction)
 
 }
